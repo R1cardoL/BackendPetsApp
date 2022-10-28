@@ -64,4 +64,4 @@ typings/
 *.tsbuildinfo
 
 #Url de conexión a mongoDB
-.src/datasource/mongodb.datasource.ts
+/mongodb.datasource.ts
