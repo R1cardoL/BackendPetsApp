@@ -65,9 +65,3 @@ typings/
 
 #Url de conexión a mongoDB
 src/datasources/mongodb.datasource.ts
-
-#Url de conexión a mongoDB
-BackendPetsApp/src/datasources/mongodb.datasource.ts
-
-#Url de conexión a mongoDB
-mongodb.datasource.ts
