@@ -5,20 +5,14 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, HttpErrors, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
-import {Usuario} from '../models';
+import {Credenciales, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
 import {AutenticacionService} from '../services';
 const fetch = require('node-fetch');
@@ -30,6 +24,32 @@ export class UsuarioController {
     @service(AutenticacionService)
     public servicioAutenticacion : AutenticacionService
   ) {}
+
+  @post('/identificarUsuario',{
+    responses: {
+     '200':{
+      description: 'Identificacion de usuarios'
+    }
+  }
+  })
+  async identificarUsuario(
+    @requestBody() credenciales : Credenciales
+   ){
+      let p = await this.servicioAutenticacion.IdentificarUsuario(credenciales.usuario, credenciales.clave);
+      if(p){
+        let token = this.servicioAutenticacion.GenerarTokenJWT(p);
+        return{
+          datos:{
+            nombre: p.nombre,
+            correo: p.correo,
+            id: p.id
+          },
+          tk: token
+        }
+      }else{
+        throw new HttpErrors[401]('Datos inválidos');
+      }
+  }
 
   @post('/usuarios')
   @response(200, {
