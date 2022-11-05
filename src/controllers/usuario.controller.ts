@@ -12,6 +12,7 @@ import {
   getModelSchemaRef, HttpErrors, param, patch, post, put, requestBody,
   response
 } from '@loopback/rest';
+import {Llaves} from '../config/llaves';
 import {Credenciales, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
 import {AutenticacionService} from '../services';
@@ -78,7 +79,7 @@ export class UsuarioController {
     let destino = usuario.correo;
     let asunto = 'Credenciales de acceso al sistema';
     let contenido = `Hola, ${usuario.nombre}, su usuario es ${usuario.correo}, y la contraseña es ${clave}`;
-    fetch(`http:127.0.0.1:5000/email?correo_destino=${destino},&asunto=${asunto}&contenido=${contenido}`)
+    fetch(`${Llaves.urlServicioNotificaciones}/email?correo_destino=${destino},&asunto=${asunto}&contenido=${contenido}`)
     .then((data:any)=>{
       console.log(data);
     })

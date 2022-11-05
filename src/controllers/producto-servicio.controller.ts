@@ -1,30 +1,27 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {ProductosServicio} from '../models';
 import {ProductosServicioRepository} from '../repositories';
 
+@authenticate('admin')
 export class ProductoServicioController {
   constructor(
     @repository(ProductosServicioRepository)
     public productosServicioRepository : ProductosServicioRepository,
   ) {}
+
 
   @post('/productos-servicios')
   @response(200, {
@@ -47,6 +44,7 @@ export class ProductoServicioController {
     return this.productosServicioRepository.create(productosServicio);
   }
 
+  @authenticate.skip()
   @get('/productos-servicios/count')
   @response(200, {
     description: 'ProductosServicio model count',
