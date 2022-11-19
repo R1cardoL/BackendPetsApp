@@ -56,6 +56,7 @@ export class ProductoServicioController {
     return this.productosServicioRepository.count(where);
   }
 
+  @authenticate.skip()
   @get('/productos-servicios')
   @response(200, {
     description: 'Array of ProductosServicio model instances',
@@ -93,6 +94,7 @@ export class ProductoServicioController {
     return this.productosServicioRepository.updateAll(productosServicio, where);
   }
 
+  @authenticate.skip()
   @get('/productos-servicios/{id}')
   @response(200, {
     description: 'ProductosServicio model instance',
