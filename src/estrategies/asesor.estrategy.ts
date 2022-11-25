@@ -7,8 +7,8 @@ import parseBearerToken from 'parse-bearer-token';
 import {AutenticacionService} from '../services';
 
 
-export class EstrategiaAdministrador implements AuthenticationStrategy {
-  name: string = 'admin';
+export class EstrategiaAsesor implements AuthenticationStrategy {
+  name: string = 'asesor';
 
   constructor(
     @service(AutenticacionService)
@@ -19,7 +19,7 @@ export class EstrategiaAdministrador implements AuthenticationStrategy {
     let token = parseBearerToken(request);
     if (token) {
       let datos = this.servicioAutenticacion.ValidarToken(token);
-      if(datos.data.rol == "admin"){
+      if(datos.data.rol == "asesor"){
         let perfil: UserProfile = Object.assign({
           nombre: datos.data.nombre
         });

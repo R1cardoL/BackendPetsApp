@@ -18,6 +18,7 @@ import {UsuarioRepository} from '../repositories';
 import {AutenticacionService} from '../services';
 const fetch = require('node-fetch');
 
+
 export class UsuarioController {
   constructor(
     @repository(UsuarioRepository)
@@ -29,7 +30,7 @@ export class UsuarioController {
   @post('/identificarUsuario',{
     responses: {
      '200':{
-      description: 'Identificacion de usuarios'
+      description: 'Identificacion correcta'
     }
   }
   })
@@ -41,14 +42,15 @@ export class UsuarioController {
         let token = this.servicioAutenticacion.GenerarTokenJWT(p);
         return{
           datos:{
-            nombre: p.nombre,
+            nombre: p.nombre + " " + p.apellido,
             correo: p.correo,
-            id: p.id
+            id: p.id,
+            rol: p.rol
           },
           tk: token
         }
       }else{
-        throw new HttpErrors[401]('Datos inválidos');
+        throw new HttpErrors[401]('Credenciales incorrectas');
       }
   }
 

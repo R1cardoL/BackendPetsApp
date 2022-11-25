@@ -1,4 +1,4 @@
-import {injectable, /* inject, */ BindingScope} from '@loopback/core';
+import { /* inject, */ BindingScope, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {Llaves} from '../config/llaves';
 import {Usuario} from '../models';
@@ -44,8 +44,9 @@ export class AutenticacionService {
     let token = jwt.sign({
       data:{
         id: usuario.id,
+        rol: usuario.rol,
         correo: usuario.correo,
-        nombre: usuario.nombre
+        nombre: usuario.nombre + " " + usuario.apellido
       }
     },
     Llaves.claveJWT);
